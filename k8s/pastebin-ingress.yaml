@@ -1,0 +1,18 @@
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: pastebin-ingress
+  namespace: default
+spec:
+  ingressClassName: nginx
+  rules:
+    - host: dev.pastebin.com
+      http:
+        paths:
+          - path: /
+            pathType: Prefix
+            backend:
+              service:
+                name: pastebin-api-service
+                port:
+                  number: 80

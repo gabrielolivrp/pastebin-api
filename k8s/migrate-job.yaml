@@ -1,0 +1,43 @@
+apiVersion: batch/v1
+kind: Job
+metadata:
+  name: migrate-job
+spec:
+  template:
+    spec:
+      containers:
+        - name: migrate
+          image: migrate/migrate:v4.15.2
+          env:
+            - name: DB_HOST
+              valueFrom:
+                configMapKeyRef:
+                  name: pastebin-database-config
+                  key: DB_HOST
+            - name: DB_PORT
+              valueFrom:
+                configMapKeyRef:
+                  name: pastebin-database-config
+                  key: DB_PORT
+            - name: DB_DATABASE
+              valueFrom:
+                configMapKeyRef:
+                  name: pastebin-database-config
+                  key: DB_DATABASE
+            - name: DB_USERNAME
+              valueFrom:
+                secretKeyRef:
+                  name: pastebin-database-secret
+                  key: DB_USERNAME
+            - name: DB_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: pastebin-database-secret
+                  key: DB_PASSWORD
+          command: ["sh", "-c"]
+          args:
+            - |
+              migrate -source=github://gabrielolivrp/pastebin-api/migrations#main \
+                      -database=postgres://${DB_USERNAME}:${DB_PASSWORD}@${DB_HOST}:${DB_PORT}/${DB_DATABASE}?sslmode=disable up
+      restartPolicy: Never
+  backoffLimit: 3

@@ -1,0 +1,39 @@
+apiVersion: apps/v1
+kind: StatefulSet
+metadata:
+  name: pastebin-redis
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: pastebin-redis
+  template:
+    metadata:
+      labels:
+        app: pastebin-redis
+    spec:
+      containers:
+        - name: pastebin-redis
+          image: redis:8.2.1
+          ports:
+            - containerPort: 6379
+          resources:
+            requests:
+              memory: "128Mi"
+              cpu: "100m"
+            limits:
+              memory: "256Mi"
+              cpu: "200m"
+          volumeMounts:
+            - name: pastebin-redis-storage
+              mountPath: /data
+
+  volumeClaimTemplates:
+    - metadata:
+        name: pastebin-redis-storage
+      spec:
+        accessModes: ["ReadWriteOnce"]
+        storageClassName: local-path
+        resources:
+          requests:
+            storage: 1Gi

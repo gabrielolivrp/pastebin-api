@@ -1,0 +1,7 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: pastebin-api-config
+data:
+  ENV: production
+  PORT: "8080"

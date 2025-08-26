@@ -1,0 +1,8 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: pastebin-database-config
+data:
+  DB_HOST: pastebin-database-service
+  DB_PORT: "5432"
+  DB_DATABASE: pastebin
