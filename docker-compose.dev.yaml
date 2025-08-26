@@ -1,25 +1,4 @@
 services:
-  api:
-    build:
-      context: .
-      dockerfile: Dockerfile
-    container_name: pastebin_api
-    environment:
-      ENV: ${ENV}
-      PORT: ${PORT}
-      DB_HOST: ${DB_HOST}
-      DB_PORT: ${DB_PORT}
-      DB_DATABASE: ${DB_DATABASE}
-      DB_USERNAME: ${DB_USERNAME}
-      DB_PASSWORD: ${DB_PASSWORD}
-    ports:
-      - "${PORT}:${PORT}"
-    depends_on:
-      - database
-      - redis
-    networks:
-      - default
-
   database:
     image: postgres:17.6
     container_name: pastebin_database
@@ -40,8 +19,6 @@ services:
     container_name: pastebin_redis
     ports:
       - "${REDIS_PORT}:6379"
-    networks:
-      - default
     restart: always
 
 volumes:
