@@ -1,4 +1,4 @@
-package midleware
+package middleware
 
 import (
 	"github.com/gabrielolivrp/pastebin-api/pkg/http/response"
