@@ -14,13 +14,6 @@ terraform {
       version = "3.0.2"
     }
   }
-
-  # precisa criar o bucket S3 antes de usar o backend
-  # backend "s3" {
-  #   bucket = "comunidadedevops"
-  #   key    = "dev/terraform.tfstate"
-  #   region = "us-east-1"
-  # }
 }
 
 provider "aws" {
