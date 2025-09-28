@@ -20,6 +20,7 @@ type DatabaseConfig struct {
 	Database string
 	Username string
 	Password string
+	SSLMode  string
 }
 
 type CacheConfig struct {
@@ -60,6 +61,7 @@ func LoadConfig(filename string) (*Config, error) {
 		Database: os.Getenv("DB_DATABASE"),
 		Username: os.Getenv("DB_USERNAME"),
 		Password: os.Getenv("DB_PASSWORD"),
+		SSLMode:  os.Getenv("DB_SSL"),
 	}
 
 	cache := CacheConfig{

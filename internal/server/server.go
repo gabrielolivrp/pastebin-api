@@ -38,6 +38,7 @@ func Start(config *config.Config) error {
 		Username: config.DB.Username,
 		Password: config.DB.Password,
 		Database: config.DB.Database,
+		SSLMode:  config.DB.SSLMode,
 	})
 
 	if err != nil {
