@@ -3,6 +3,5 @@ kind: ConfigMap
 metadata:
   name: pastebin-redis-config
 data:
-  DB_DATABASE: pastebin
-  REDIS_HOST: pastebin-redis-service
+  REDIS_HOST: pastebin-api-redis.cws9nj.0001.use1.cache.amazonaws.com
   REDIS_PORT: "6379"

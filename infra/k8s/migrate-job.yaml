@@ -34,10 +34,15 @@ spec:
                 secretKeyRef:
                   name: pastebin-database-secret
                   key: DB_PASSWORD
+            - name: DB_SSL
+              valueFrom:
+                configMapKeyRef:
+                  name: pastebin-database-config
+                  key: DB_SSL
           command: ["sh", "-c"]
           args:
             - |
               migrate -source=github://gabrielolivrp/pastebin-api/migrations#main \
-                      -database=postgres://${DB_USERNAME}:${DB_PASSWORD}@${DB_HOST}:${DB_PORT}/${DB_DATABASE}?sslmode=disable up
+                      -database=postgres://${DB_USERNAME}:${DB_PASSWORD}@${DB_HOST}:${DB_PORT}/${DB_DATABASE}?sslmode=${DB_SSL} up
       restartPolicy: Never
   backoffLimit: 3
