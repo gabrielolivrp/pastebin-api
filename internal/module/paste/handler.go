@@ -2,6 +2,7 @@ package paste
 
 import (
 	"errors"
+	"time"
 
 	"github.com/gabrielolivrp/pastebin-api/pkg/http/response"
 	"github.com/gabrielolivrp/pastebin-api/pkg/logging"
@@ -81,6 +82,14 @@ func (h *pasteHandler) GetByIdHandler(c *gin.Context) *response.APIResponse {
 			Value: err.Error(),
 		})
 		return response.InternalServerError(err.Error())
+	}
+
+	if paste.ExpiresAt != nil && paste.ExpiresAt.Before(time.Now()) {
+		h.logger.Error("Paste has expired", logging.Field{
+			Key:   "id",
+			Value: id,
+		})
+		return response.NotFound("Paste")
 	}
 
 	return response.OK(paste)
